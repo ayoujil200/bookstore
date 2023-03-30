@@ -1,0 +1,93 @@
+<div class="container custom-container-2">
+  <app-search-book (onSearchLunch)="onSearch($event)" [bookService]="bookService" [searchDetails]="searchDetails" [books]="books"></app-search-book>
+  <!-- Show it when there is no employee -->
+  <div class="no-data text-center" *ngIf="books.length == 0">
+    <p>There is no task added yet!</p>
+  </div>
+  <!-- Employees list table, it hides when there is no employee -->
+  <div *ngIf="books.length !== 0">
+    <h3 class="mb-3 mt-3 text-center"><span class="badge bg-primary">Book List</span></h3>
+    <div class="col-md-12">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Author</th>
+            <th scope="col">Categories</th>
+            <th scope="col">Details</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let book of books">
+            <td>
+              {{ book.id }}
+            </td>
+            <td>
+              {{ book.title }}
+            </td>
+            <td>
+              {{ book.description }}
+            </td>
+            <td>
+              {{ book.author }}
+            </td>
+            <td>
+              {{ book.categories }}
+            </td>
+            <td>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" [attr.data-bs-target]="'#details' + book.id">
+                Details
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="details{{book.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Book Details</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="card w-100" style="width: 18rem;">
+                        <img src="https://cdn.pixabay.com/photo/2015/11/19/21/10/glasses-1052010__340.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <p class="card-text">Id:
+                            {{ book.id }}
+                          </p>
+                          <p class="card-text">Title:
+                            {{ book.title }}
+                          </p>
+                          <p class="card-text">Description:
+                            {{ book.description }}
+                          </p>
+                          <p class="card-text">Author:
+                            {{ book.author }}
+                          </p>
+                          <p class="card-text">Categories:
+                            {{ book.categories }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><button type="button" class="btn btn-primary m-1" (click)="updateBook(book)">Update</button></td>
+            <td>
+              <button type="button" class="btn btn-danger m-1" (click)="deleteBook(book.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
